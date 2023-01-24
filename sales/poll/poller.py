@@ -4,17 +4,19 @@ import sys
 import time
 import json
 import requests
-from sales_rest.models import AutoVO
+
 sys.path.append("")
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "sales_project.settings")
 django.setup()
+
+from sales_rest.models import AutomobileVO
 
 def get_inventory():
     response = requests.get("http://inventory-api:8000/api/automobiles")
     content = json.loads(response.content)
     print(content["autos"])
     for auto in content["autos"]:
-        AutoVO.objects.update_or_create(
+        AutomobileVO.objects.update_or_create(
             import_href=auto["href"],
             defaults={"vin": auto["vin"]}
         )
