@@ -13,6 +13,7 @@ services:
     environment:
       HOST_OS: ${OS}
       NODE_ENV: development
+      PORT: 3000
       HOST: "0.0.0.0"
   database:
     image: postgres:14.2-bullseye
