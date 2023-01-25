@@ -13,7 +13,7 @@ class SalesPerson(models.Model):
     email = models.EmailField()
 
     def get_api_url(self):
-        return reverse("api_salespersons",kwargs={"employee_id": self.employee_id})
+        return reverse("api_salespersons",kwargs={"pk": self.pk})
 
 
 class Customer(models.Model):
@@ -39,5 +39,8 @@ class Sale(models.Model):
         AutomobileVO,
         on_delete=models.CASCADE
     )
-    sales_date = models.DateTimeField(auto_now_add=True)
+    sales_date = models.DateTimeField(auto_now_add=True, null=True)
     sales_price = models.PositiveIntegerField(null=True)
+
+    def get_api_url(self):
+        return reverse("api_list_sales", kwargs={"pk": self.pk})
