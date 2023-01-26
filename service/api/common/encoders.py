@@ -4,7 +4,7 @@ from service_rest.models import AutomobileVO, Technician, ServiceAppointment
 
 class AutomobileVODetailEncoder(ModelEncoder):
   model= AutomobileVO
-  properites = ["import_href","vin"]
+  properties = ["import_href","vin"]
 
 
 class TechnicianDetailEncoder(ModelEncoder):
@@ -14,13 +14,14 @@ class TechnicianDetailEncoder(ModelEncoder):
 
 class TechnicianListEncoder(ModelEncoder):
   model=Technician
-  properties = ["name"]
+  properties = ["name","employee_number"]
 
 
 class ServiceAppointmentEncoder(ModelEncoder):
   model = ServiceAppointment
-  properties = ["vin","customer_name","date_time","reason", "technician"]
+  properties = ["href","vin","customer_name","date_time","reason", "technician","is_vip"]
 
   encoders = {
-    "technician":TechnicianDetailEncoder
+    "technician":TechnicianDetailEncoder(),
+    "vin":AutomobileVODetailEncoder()
   }
