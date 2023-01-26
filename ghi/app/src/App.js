@@ -1,11 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainPage from "./MainPage";
 import Nav from "./Nav";
+import SalesPersonForm from "./SalesPersonForm";
 import TechnicianForm from "./TechnicianForm";
 import ServiceAppointmentForm from "./ServiceAppointmentForm";
 import ServiceList from "./ServiceList";
 import VehicleModelsList from "./VehicleModelsList";
 import VehicleModelForm from "./VehicleModelForm";
+import CustomerForm from "./CustomerForm";
+import SalesList from "./SalesList";
 
 function App() {
 	return (
@@ -24,6 +27,15 @@ function App() {
 					<Route path="services">
 						<Route index element={<ServiceList />} />
 						<Route path="new" element={<ServiceAppointmentForm />} />
+					</Route>
+					<Route path="salesperson">
+						<Route path="new" element={<SalesPersonForm />} />
+					</Route>
+					<Route path="customer">
+						<Route path="new" element={<CustomerForm />} />
+					</Route>
+					<Route path="sales">
+						<Route path="list" element={<SalesList />} />
 					</Route>
 				</Routes>
 			</div>

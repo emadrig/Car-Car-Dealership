@@ -61,6 +61,31 @@ function Nav() {
 							>
 								Add Vehicle
 							</NavLink>
+							<NavLink
+								className="nav-link"
+								aria-current="page"
+								to="/salesperson/new"
+							>
+								New Sales Person
+							</NavLink>
+						</li>
+						<li className="nav-item">
+							<NavLink
+								className="nav-link"
+								aria-current="page"
+								to="/customer/new"
+							>
+								New Customer
+							</NavLink>
+						</li>
+						<li className="nav-item">
+							<NavLink
+								className="nav-link"
+								aria-current="page"
+								to="/sales/list"
+							>
+								Sales List
+							</NavLink>
 						</li>
 					</ul>
 				</div>
