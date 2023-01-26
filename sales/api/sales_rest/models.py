@@ -1,7 +1,7 @@
-from django.db import models
+from django.db import models, IntegrityError
 from django.urls import reverse
 from django.http import JsonResponse
-
+import random 
 # Create your models here.
 class AutomobileVO(models.Model):
     import_href = models.CharField(max_length=200, unique=True)
@@ -28,6 +28,7 @@ class Customer(models.Model):
         return reverse("api_customers",kwargs={"pk": self.pk})
 
 class Sale(models.Model):
+    sale_number = models.PositiveIntegerField(max_length=10, unique=True, null=True)
     salesperson = models.ForeignKey (
         SalesPerson,
         on_delete=models.CASCADE
@@ -47,3 +48,16 @@ class Sale(models.Model):
 
     def get_api_url(self):
         return reverse("api_list_sales", kwargs={"pk": self.pk})
+
+    def save(self):
+        if not self.sale_number:
+            while True:
+                random_number = random.randint(100000, 999999)
+                self.sale_number = '420' + str(random_number)
+                try:
+                    super(Sale, self).save()
+                except IntegrityError:
+                    continue
+                break
+        else:
+            super(Sale, self).save()

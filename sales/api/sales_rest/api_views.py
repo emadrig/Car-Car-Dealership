@@ -22,7 +22,7 @@ class CustomerEncoder(ModelEncoder):
 
 class SaleEncoder(ModelEncoder):
     model = Sale
-    properties = ["salesperson", "customer", "automobile", "sales_date", "sales_price"]
+    properties = ["sale_number", "pk","salesperson", "customer", "automobile", "sales_date", "sales_price"]
 
     encoders = {
         "automobile": AutomobileVOEncoder(),
@@ -198,6 +198,11 @@ def api_show_sale(request, pk):
     if request.method == "DELETE":
         try:
             sale = Sale.objects.get(pk=pk)
+            automobile_vin = sale.automobile.vin
+            automobile = AutomobileVO.objects.get(vin=automobile_vin)
+            automobile.is_sold = False
+            automobile.save()
+
             sale.delete()
             return JsonResponse(
                 sale,

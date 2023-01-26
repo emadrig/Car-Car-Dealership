@@ -6,25 +6,18 @@ function SalesList() {
     const [salesPersons, setSalesPersons] = useState([]);
 
     const getData = async () => {
-        const response = await fetch("http://localhost:8090/api/sales/");
+        const response_sales = await fetch("http://localhost:8090/api/sales/");
+        const response_salesperson = await fetch('http://localhost:8090/api/salesperson/');
 
-        if (response.ok) {
-            const data = await response.json();
-            console.log(data);
-            setSales(data.sales)
-            console.log(data.sales)
+        if (response_sales.ok && response_salesperson.ok) {
+            const data_sales = await response_sales.json();
+            const data_salesperson = await response_salesperson.json();
+
+            setSales(data_sales.sales)
+            setSalesPersons(data_salesperson.salesperson)
         }
     }
 
-    const fetchSalesPersons = async () => {
-        const response = await fetch('http://localhost:8090/api/salesperson/');
-        if (response.ok) {
-            const data = await response.json();
-            console.log("This is fetchSalesPersons data:", data)
-            setSalesPersons(data.salesperson)
-            console.log("This is salesPersons after set:", salesPersons)
-        }
-    }
 
     const filteredSales = sales.filter(sale => sale.salesperson.name === selectedSalesPerson)
 
@@ -32,9 +25,7 @@ function SalesList() {
         getData();
     }, []);
 
-    useEffect(() => {
-        fetchSalesPersons();
-    }, [])
+
 
     const handleSalesPersonChange = (e) => {
         const value = e.target.value;
@@ -44,9 +35,10 @@ function SalesList() {
 
 	return (
         <div>
-            <>
-            <button onClick={() => setSelectedSalesPerson('')}>Reset</button>
-            <select onChange={handleSalesPersonChange} value={selectedSalesPerson}>
+            <div className="">
+                <button  onClick={() => setSelectedSalesPerson('')}>Reset</button>
+            </div>
+            <select className="form-select form-select-sm mb-3"onChange={handleSalesPersonChange} value={selectedSalesPerson}>
                 <option>Select Sales Person</option>
                 {salesPersons.map((salesPerson) => {
                     return (
@@ -56,7 +48,6 @@ function SalesList() {
                     )
                 })}
             </select>
-            </>
             <table className="table table-striped">
                 <thead>
                     <tr>
