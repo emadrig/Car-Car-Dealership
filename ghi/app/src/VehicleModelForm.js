@@ -5,7 +5,7 @@ function VehicleModelForm() {
 	const [formData, setFormData] = useState({
 		name: "",
 		picture_url: "",
-		manufacturer: "",
+		manufacturer_id: "",
 	});
 
 	const fetchData = async () => {
@@ -40,7 +40,7 @@ function VehicleModelForm() {
 			setFormData({
 				name: "",
 				picture_url: "",
-				manufacturer: "",
+				manufacturer_id: "",
 			});
 		}
 	};
@@ -48,6 +48,7 @@ function VehicleModelForm() {
 	const handleFormChange = (e) => {
 		const value = e.target.value;
 		const inputName = e.target.name;
+		console.log(value);
 
 		setFormData({
 			...formData,
@@ -90,16 +91,16 @@ function VehicleModelForm() {
 						<div className="mb-3">
 							<select
 								onChange={handleFormChange}
-								value={formData.manufacturer}
+								value={formData.manufacturer_id}
 								required
-								name="manufacturer"
+								name="manufacturer_id"
 								id="manufacturer"
 								className="form-select"
 							>
 								<option value="">Choose a manufacturer</option>
 								{manufacturers.map((manufacturer) => {
 									return (
-										<option key={manufacturer.name} value={manufacturer.name}>
+										<option key={manufacturer.id} value={manufacturer.id}>
 											{manufacturer.name}
 										</option>
 									);

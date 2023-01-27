@@ -94,16 +94,19 @@ def api_list_services(request,vin=None):
       technician = Technician.objects.get(employee_number=employee_number)
       content["technician"]=technician
 
-      automobile_vin = content["vin"]
-      vin = AutomobileVO.objects.get(vin=automobile_vin)
-      content["vin"]=vin
-      content["is_vip"]=True
-
-    except AutomobileVO.DoesNotExist:
+    except Technician.DoesNotExist:
       return JsonResponse(
         {"message":"Invalid technician id"},
         status = 400
       )
+
+    try:
+      automobile_vin = content["vin"]
+      auto = AutomobileVO.objects.get(vin=automobile_vin)
+      content["vin"]=auto.vin
+      content["is_vip"]=True
+    except AutomobileVO.DoesNotExist:
+      pass
 
     service = ServiceAppointment.objects.create(**content)
     return JsonResponse(
@@ -113,22 +116,23 @@ def api_list_services(request,vin=None):
     )
 
 @require_http_methods(["DELETE","GET","PUT"])
-def api_show_service(request,service_id):
+def api_show_service(request,pk):
   if request.method == "GET":
-      technician = Technician.objects.get(employee_number=employee_number)
+      service = ServiceAppointment.objects.get(id=pk)
       return JsonResponse(
-        technician,
-        encoder=TechnicianDetailEncoder,
+        service,
+        encoder=ServiceAppointmentEncoder,
         safe=False
       )
   elif request.method=="DELETE":
-    count, _ = Technician.objects.filter(employee_number=employee_number).delete()
+    count, _ = ServiceAppointment.objects.filter(id=pk).delete()
     return JsonResponse({"deleted":count> 0})
   else:
     content = json.loads(request.body)
-    Technician.objects.filter(employee_number=employee_number).update(**content)
-    technician = Technician.objects.get(employee_number=employee_number)
+    content["is_finished"]=True
+    ServiceAppointment.objects.filter(id=pk).update(**content)
+    service = ServiceAppointment.objects.get(id=pk)
     return JsonResponse(
-      technician,
-      encoder=TechnicianDetailEncoder,
+      service,
+      encoder=ServiceAppointmentEncoder,
       safe=False,)

@@ -19,9 +19,8 @@ class TechnicianListEncoder(ModelEncoder):
 
 class ServiceAppointmentEncoder(ModelEncoder):
   model = ServiceAppointment
-  properties = ["href","vin","customer_name","date_time","reason", "technician","is_vip"]
+  properties = ["vin","customer_name","date_time","reason", "technician","is_vip","id", "is_finished"]
 
   encoders = {
     "technician":TechnicianDetailEncoder(),
-    "vin":AutomobileVODetailEncoder()
   }

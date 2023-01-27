@@ -7,5 +7,5 @@ urlpatterns = [
     path("technicians/", api_list_technicians, name="api_create_technician"),
     path("technicians/<int:employee_number>/",api_show_technician,name="api_list_technicians"),
     path("services/", api_list_services, name = "api_list_services"),
-    path("services/<str:vin>/", api_show_service, name = "api_show_service"),
+    path("services/<int:pk>/", api_show_service, name = "api_show_service"),
 ]
