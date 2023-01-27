@@ -1,88 +1,58 @@
 import {useEffect, useState, useRef} from 'react';
+import Slider from "react-slick";
+import astronaut from "./assets/astronaut.png";
+import celebrating from "./assets/celebrating.png";
+import education from "./assets/education.png";
+import taken from "./assets/taken.png";
+import "./App.css";
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
+
+const images = [astronaut, celebrating, education, taken]
 
 function MainPage() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [translateValue, setTranslateValue] = useState(0);
-  const [automobiles, setAutomobiles] = useState([]);
 
-  const getData = async () => {
-    const response = await fetch('http://localhost:8100/api/automobiles/');
-    if (response.ok) {
-      const data = await response.json()
-      console.log(data.autos)
-      setAutomobiles(data.autos)
-    }
+  const NextArrow = ({onClick}) => {
+    return (
+      <div className="arrow next" onClick={onClick}>
+        <FaArrowRight />
+      </div>
+    )
   }
 
-  const slideWidth = () => {
-    if(slideRef && slideRef.current){
-      return slideRef.current.clientWidth;
-    }
-    return 0;
+  const PrevArrow = ({onClick}) => {
+    return (
+      <div className="arrow prev" onClick={onClick}>
+        <FaArrowLeft />
+      </div>
+    )
   }
 
-  const handleNextSlide = () => {
-    if (currentIndex === automobiles.length - 1) {
-      setCurrentIndex(0);
-      setTranslateValue(0);
-    } else {
-      setCurrentIndex(currentIndex + 1);
-      setTranslateValue(translateValue - (slideWidth()))
-    }
-  };
+  const [imageIndex, setImageIndex] = useState(0)
+  const [activeSlide, setActiveSlide] = useState(0);
 
-  const handlePrevSlide = () => {
-    if (currentIndex === 0) {
-      setCurrentIndex(automobiles.length - 1);
-      setTranslateValue(-(slideWidth() * (automobiles.length - 1)));
-    } else {
-      setCurrentIndex(currentIndex - 1);
-      setTranslateValue(translateValue + (slideWidth()));
-    }
-  };
-
-  const slideRef = useRef(null);
-
-  useEffect(() => {
-    if(slideRef.current){
-      slideWidth.current = slideRef.current.clientWidth;
-    }
-  }, [automobiles]);
-  
-  useEffect(() => {
-    getData()
-  }, []);
+  const settings = {
+    infinite: true,
+    lazyLoad: true,
+    speed: 300,
+    slidesToShoe: 4,
+    centerMode: true,
+    centerPadding: 0,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+    beforeChange: (current, next) => setImageIndex(next),
+  }
 
   return (
-    <div className="px-4 py-5 my-5 text-center">
-      <h1 className="display-5 fw-bold">CarCars</h1>
-      <div className="col-lg-6 mx-auto">
-        <p className="lead mb-4">
-          The premiere solution for automobile dealership
-          management!
-        </p>
-        <div className="carousel-container">
-          <div
-            className="carousel-slider"
-            style={{
-              transform: `translateX(${translateValue}px)`,
-              transition: "transform ease-out 0.45s"
-            }}
-          >
-
+    <div className="MainPage">
+      <Slider {...settings}>
+        {images.map((img,idx) => (
+          <div className={idx === imageIndex ? "slide activeSlide" : "slide"}>
+            <img src={img} alt={img} />
           </div>
-          <div className="carousel-arrows">
-            <div className="carousel-arrow prev" onClick={handlePrevSlide}>
-              <i className="fas fa-arrow-left" />
-            </div>
-            <div className="carousel-arrow next" onClick={handleNextSlide}>
-              <i className="fas fa-arrow-right" />
-            </div>
-          </div>
-        </div>
-      </div>
+        ))}
+      </Slider>
     </div>
   );
-}
+  }
 
 export default MainPage
