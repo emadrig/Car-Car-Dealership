@@ -14,7 +14,6 @@ from sales_rest.models import AutomobileVO
 def get_inventory():
     response = requests.get("http://inventory-api:8000/api/automobiles")
     content = json.loads(response.content)
-    print(content["autos"])
     for auto in content["autos"]:
         AutomobileVO.objects.update_or_create(
             import_href=auto["href"],
@@ -30,7 +29,6 @@ def poll():
             # Write your polling logic, here
             get_inventory()
         except Exception as e:
-            print("ERROR")
             print(e, file=sys.stderr)
         time.sleep(10)
 

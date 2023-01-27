@@ -13,6 +13,21 @@ function SalesList() {
         }
     }
 
+    const handleDelete = async (sale) => {
+
+        const deleteSaleUrl = `http://localhost:8090/api/sales/${sale.pk}`
+    
+        const response = await fetch(deleteSaleUrl, {
+          method: 'DELETE',
+        });
+        if (response.ok){
+          setSales(sales.filter(s => s.pk !== sale.pk));
+          console.log(`Shoe with id ${sale} has been deleted`);
+        } else {
+          console.log("Error deleting shoe")
+        }
+      }
+
     useEffect(() => {
         getData();
     }, []);
@@ -39,6 +54,13 @@ function SalesList() {
                             <td>{sale.customer.name}</td>
                             <td>{sale.automobile.vin}</td>
                             <td>${sale.sales_price}</td>
+                            <td>
+                                <ul className="list-inline m-0">
+                                <li className="list-inline-item">
+                                    <button onClick={() => handleDelete(sale)} className="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i className="fas fa-trash"></i>Delete</button>
+                                </li>
+                                </ul>
+                            </td>
                         </tr>
                     );
                 })

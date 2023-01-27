@@ -28,3 +28,13 @@
     width: 80%;
     height: auto;
 }
+
+.reset-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.f-s {
+    margin-top: 25px;
+}

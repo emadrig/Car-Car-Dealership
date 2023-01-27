@@ -12,24 +12,36 @@ export default function SalesForm(){
     const [salespersons, setSalesPersons] = useState([]);
     const [customers, setCustomers] = useState([]);
 
-    const getData = async () => {
+    const getAutomobiles = async () => {
         const response_automobiles = await fetch("http://localhost:8100/api/automobiles/");
-        const response_salespersons = await fetch('http://localhost:8090/api/salesperson/');
-        const response_customers = await fetch('http://localhost:8090/api/customers/')
 
-        if (response_automobiles.ok && response_salespersons.ok && response_customers.ok) {
+        if (response_automobiles.ok) {
             const data_automobiles = await response_automobiles.json();
-            const data_salespersons = await response_salespersons.json();
-            const data_customers = await response_customers.json();
-            console.log(data_automobiles)
-            console.log(data_salespersons)
-            console.log(data_customers)
             setAutomobiles(data_automobiles.autos)
-            setSalesPersons(data_salespersons.salesperson)
-            setCustomers(data_customers.customers)
+        } else {
+            console.log("ERROR GETTING AUTOMOBILE RESPONSE")
         }
     }
-    console.log(automobiles)
+    const getSalespersons = async () => {
+        const response_salespersons = await fetch('http://localhost:8090/api/salesperson/');
+
+        if (response_salespersons.ok) {
+            const data_salespersons = await response_salespersons.json();;
+            setSalesPersons(data_salespersons.salesperson)
+        } else {
+            console.log("ERROR GETTING SALESPERSONS RESPONSE")
+        }
+    }
+    const getCustomers = async () => {
+        const response_customers = await fetch('http://localhost:8090/api/customers/')
+
+        if (response_customers.ok) {
+            const data_customers = await response_customers.json();
+            setCustomers(data_customers.customers)
+        } else {
+            console.log("ERROR GETTING CUSTOMER RESPONSE")
+        }
+    }
 
     // const filteredAutomobiles = automobiles.filter(automobile => !automobile.is_sold)
 
@@ -48,7 +60,6 @@ export default function SalesForm(){
         const response = await fetch(salesUrl, fetchConfig);
         if (response.ok) {
             const newSale = await response.json()
-            console.log(newSale)
             setFormData({
                 automobile: '',
                 salesperson:'',
@@ -70,7 +81,9 @@ export default function SalesForm(){
     }
     
     useEffect(() => {
-        getData();
+        getCustomers();
+        getAutomobiles();
+        getSalespersons();
     }, []);
 
     return (

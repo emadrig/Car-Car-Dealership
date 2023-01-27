@@ -1,15 +1,20 @@
 import {useEffect, useState, useRef} from 'react';
 import Slider from "react-slick";
-import astronaut from "./assets/astronaut.png";
-import celebrating from "./assets/celebrating.png";
-import education from "./assets/education.png";
-import taken from "./assets/taken.png";
 import "./App.css";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 
-const images = [astronaut, celebrating, education, taken]
-
 function MainPage() {
+  const [models, setModels] = useState([]);
+
+  const getModels = async () => {
+    const response_models = await fetch('http://localhost:8100/api/models/')
+
+    if (response_models.ok) {
+      const data_models = await response_models.json();
+      setModels(data_models.models)
+    }
+  }
+
 
   const NextArrow = ({onClick}) => {
     return (
@@ -42,12 +47,26 @@ function MainPage() {
     beforeChange: (current, next) => setImageIndex(next),
   }
 
+  useEffect(() => {
+    getModels();
+}, []);
+
   return (
     <div className="MainPage">
+      <div className="px-4 py-5 my-5 text-center">
+        <h1 className="display-5 fw-bold">CarCar</h1>
+      <div className="col-lg-6 mx-auto">
+      <p className="lead mb-4">
+      The premiere solution for automobile dealership
+      management!
+      </p>
+      </div>
+    </div>
+
       <Slider {...settings}>
-        {images.map((img,idx) => (
-          <div className={idx === imageIndex ? "slide activeSlide" : "slide"}>
-            <img src={img} alt={img} />
+        {models.map((model,idx) => (
+          <div key={model.href} className={idx === imageIndex ? "slide activeSlide" : "slide"}>
+            <img src={model.picture_url} alt="ADD MODELS FOR IMAGES" />
           </div>
         ))}
       </Slider>
