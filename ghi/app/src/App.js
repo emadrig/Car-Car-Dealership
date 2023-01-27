@@ -11,6 +11,7 @@ import CustomerForm from "./CustomerForm";
 import SalesList from "./SalesList";
 import ManufacturerForm from "./ManufacturersForm";
 import ManufacturerList from "./ManufacturerList";
+import ServiceHistoryList from "./ServiceHistoryList";
 
 function App() {
 	return (
@@ -29,6 +30,7 @@ function App() {
 					<Route path="services">
 						<Route index element={<ServiceList />} />
 						<Route path="new" element={<ServiceAppointmentForm />} />
+						<Route path="history" element={<ServiceHistoryList />} />
 					</Route>
 					<Route path="manufacturers">
 						<Route index element={<ManufacturerList />} />

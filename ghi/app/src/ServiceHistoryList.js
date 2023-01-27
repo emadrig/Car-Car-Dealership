@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function ServiceList() {
+function ServiceHistoryList() {
 	const [services, setServices] = useState([]);
 	const [filterValue, setFilterValue] = useState(" ");
 
@@ -9,56 +9,13 @@ function ServiceList() {
 
 		if (response.ok) {
 			const data = await response.json();
-			setServices(
-				data.services.filter((service) => service.is_finished == false)
-			);
+			setServices(data.services);
 		}
 	};
 
 	useEffect(() => {
 		fetchData();
 	}, []);
-
-	const handleDelete = async (service_id) => {
-		const deleteUrl = `http://localhost:8080/api/services/${service_id}/`;
-		const fetchConfig = {
-			method: "delete",
-		};
-
-		const deleteResponse = await fetch(deleteUrl, fetchConfig);
-		if (deleteResponse.ok) {
-			fetchData();
-		}
-	};
-
-	const handleFinished = async (service_id) => {
-		const serviceResponse = await fetch(
-			`http://localhost:8080/api/services/${service_id}/`
-		);
-
-		if (serviceResponse.ok) {
-			const data = await serviceResponse.json();
-			const putData = {};
-
-			putData["customer_name"] = data.customer_name;
-			putData["date_time"] = data.date_time;
-			putData["reason"] = data.reason;
-			putData["technician"] = data.technician.employee_number;
-			putData["vin"] = data.vin;
-
-			const updateUrl = `http://localhost:8080/api/services/${service_id}/`;
-
-			const updateConfig = {
-				method: "put",
-				body: JSON.stringify(putData),
-			};
-
-			const updateResponse = await fetch(updateUrl, updateConfig);
-			if (updateResponse.ok) {
-				fetchData();
-			}
-		}
-	};
 
 	const filteredServices = () => {
 		if (filterValue === " ") {
@@ -83,6 +40,26 @@ function ServiceList() {
 			);
 		} else {
 			return <td>Car Noob</td>;
+		}
+	};
+
+	const isFinished = (service) => {
+		if (service.is_finished === true) {
+			return (
+				<td>
+					<button className="btn btn-success" value={service.id}>
+						Completed
+					</button>
+				</td>
+			);
+		} else {
+			return (
+				<td>
+					<button className="btn btn-secondary" value={service.id}>
+						Upcoming
+					</button>
+				</td>
+			);
 		}
 	};
 
@@ -115,22 +92,7 @@ function ServiceList() {
 								<td>{service.technician.name}</td>
 								<td>{service.reason}</td>
 								{isVip(service.is_vip)}
-								<td>
-									<button
-										onClick={() => handleDelete(service.id)}
-										className="btn btn-danger"
-										value={service.id}
-									>
-										Cancel
-									</button>
-									<button
-										onClick={() => handleFinished(service.id)}
-										className="btn btn-success"
-										value={service.id}
-									>
-										Finished
-									</button>
-								</td>
+								{isFinished(service)}
 							</tr>
 						);
 					})}
@@ -140,4 +102,4 @@ function ServiceList() {
 	);
 }
 
-export default ServiceList;
+export default ServiceHistoryList;

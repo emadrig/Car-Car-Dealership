@@ -8,7 +8,7 @@ function ServiceAppointmentForm() {
 		customer_name: "",
 		date_time: "",
 		reason: "",
-		techician: "",
+		technician: "",
 	});
 
 	const fetchData = async () => {
@@ -27,13 +27,9 @@ function ServiceAppointmentForm() {
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
-
-		// const {technician} = formData;
-		const url = "";
+		const url = "http://localhost:8080/api/services/";
 		const fetchConfig = {
 			method: "post",
-			//Because we are using one formData state object,
-			//we can now pass it directly into our request!
 			body: JSON.stringify(formData),
 			headers: {
 				"Content-Type": "application/json",
@@ -47,7 +43,7 @@ function ServiceAppointmentForm() {
 				customer_name: "",
 				date_time: "",
 				reason: "",
-				technicican: "",
+				technician: "",
 			});
 		}
 	};
@@ -75,21 +71,22 @@ function ServiceAppointmentForm() {
 								placeholder="Vin Number"
 								required
 								type="text"
-								name="vin_number"
-								id="vin_number"
+								name="vin"
+								id="vin"
 								className="form-control"
+								maxLength="17"
 							/>
-							<label htmlFor="name">Vin Number</label>
+							<label htmlFor="customer_name">Vin Number</label>
 						</div>
 						<div className="form-floating mb-3">
 							<input
 								onChange={handleFormChange}
-								value={formData.name}
+								value={formData.customer_name}
 								placeholder="Starts"
 								required
-								type="name"
-								name="name"
-								id="name"
+								type="text"
+								name="customer_name"
+								id="customer_name"
 								className="form-control"
 							/>
 							<label htmlFor="starts">Name</label>
@@ -131,8 +128,8 @@ function ServiceAppointmentForm() {
 								{technicians.map((technician) => {
 									return (
 										<option
-											key={formData.technician}
-											value={formData.technician}
+											key={technician.employee_number}
+											value={technician.employee_number}
 										>
 											{technician.name}
 										</option>

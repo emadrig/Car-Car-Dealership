@@ -52,6 +52,15 @@ function Nav() {
 							<NavLink
 								className="nav-link"
 								aria-current="page"
+								to="/services/history/"
+							>
+								Service History
+							</NavLink>
+						</li>
+						<li className="nav-item">
+							<NavLink
+								className="nav-link"
+								aria-current="page"
 								to="/manufacturers/"
 							>
 								See Manufacturers
@@ -115,3 +124,34 @@ function Nav() {
 }
 
 export default Nav;
+
+{
+	/* <Dropdown>
+	<DropdownToggle caret color="primary">
+		Services
+	</DropdownToggle>
+	<DropdownMenu>
+		<NavLink
+			className="nav-link dropdown-item"
+			aria-current="page"
+			to="/services/new"
+		>
+			<DropdownItem>New Service Appointment</DropdownItem>
+		</NavLink>
+		<NavLink
+			className="nav-link dropdown-item"
+			aria-current="page"
+			to="/services/"
+		>
+			<DropdownItem>Service Appointments</DropdownItem>
+		</NavLink>
+		<NavLink
+			className="nav-link dropdown-item"
+			aria-current="page"
+			to="/services/history/"
+		>
+			<DropdownItem>Service History</DropdownItem>
+		</NavLink>
+	</DropdownMenu>
+</Dropdown>; */
+}
