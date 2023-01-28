@@ -21,7 +21,7 @@ function ManufacturerList() {
 		<table className="table table-striped">
 			<thead>
 				<tr>
-					<th>Manufacturer</th>
+					<th>Manufacturers</th>
 				</tr>
 			</thead>
 			<tbody>

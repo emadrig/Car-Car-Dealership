@@ -76,6 +76,24 @@ function Nav() {
 							</NavLink>
 						</li>
 						<li className="nav-item">
+							<NavLink
+								className="nav-link"
+								aria-current="page"
+								to="/automobiles/"
+							>
+								List Automobiles
+							</NavLink>
+						</li>
+						<li className="nav-item">
+							<NavLink
+								className="nav-link"
+								aria-current="page"
+								to="/automobiles/new"
+							>
+								Add Automobile
+							</NavLink>
+						</li>
+						<li className="nav-item">
 							<NavLink className="nav-link" aria-current="page" to="/vehicles/">
 								See Vehicles
 							</NavLink>

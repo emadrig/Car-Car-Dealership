@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 
-function VehicleModelForm() {
-	const [manufacturers, setManufacturers] = useState([]);
+function AutomobileForm() {
+	const [models, setModels] = useState([]);
 	const [formData, setFormData] = useState({
-		name: "",
-		picture_url: "",
-		manufacturer_id: "",
+		vin: "",
+		color: "",
+		year: "",
+		model_id: "",
 	});
 
 	const fetchData = async () => {
-		const manufacturerUrl = "http://localhost:8100/api/manufacturers/";
-		const response = await fetch(manufacturerUrl);
+		const url = "http://localhost:8100/api/models/";
+		const response = await fetch(url);
 
 		if (response.ok) {
 			const data = await response.json();
-			setManufacturers(data.manufacturers);
+			setModels(data.models);
 		}
 	};
 
@@ -25,7 +26,7 @@ function VehicleModelForm() {
 	const handleSubmit = async (event) => {
 		event.preventDefault();
 
-		const url = "http://localhost:8100/api/models/";
+		const automobileUrl = "http://localhost:8100/api/automobiles/";
 		const fetchConfig = {
 			method: "post",
 			body: JSON.stringify(formData),
@@ -34,13 +35,13 @@ function VehicleModelForm() {
 			},
 		};
 
-		const response = await fetch(url, fetchConfig);
-
+		const response = await fetch(automobileUrl, fetchConfig);
 		if (response.ok) {
 			setFormData({
-				name: "",
-				picture_url: "",
-				manufacturer_id: "",
+				vin: "",
+				color: "",
+				year: "",
+				model_id: "",
 			});
 		}
 	};
@@ -48,7 +49,6 @@ function VehicleModelForm() {
 	const handleFormChange = (e) => {
 		const value = e.target.value;
 		const inputName = e.target.name;
-		console.log(value);
 
 		setFormData({
 			...formData,
@@ -60,48 +60,61 @@ function VehicleModelForm() {
 		<div className="row">
 			<div className="offset-3 col-6">
 				<div className="shadow p-4 mt-4">
-					<h1>Add a new vehicle model</h1>
+					<h1>Add a new Automobile</h1>
 					<form onSubmit={handleSubmit} id="create-conference-form">
 						<div className="form-floating mb-3">
 							<input
 								onChange={handleFormChange}
-								value={formData.name}
+								value={formData.vin}
 								placeholder="Name"
 								required
 								type="text"
-								name="name"
-								id="name"
+								name="vin"
+								id="vin"
 								className="form-control"
 							/>
-							<label htmlFor="name">Name</label>
+							<label htmlFor="vin">VIN</label>
 						</div>
 						<div className="form-floating mb-3">
 							<input
 								onChange={handleFormChange}
-								value={formData.picture_url}
-								placeholder="Picture URL"
+								value={formData.color}
+								placeholder="Color"
 								required
-								type="url"
-								name="picture_url"
-								id="picture_url"
+								type="text"
+								name="color"
+								id="color"
 								className="form-control"
 							/>
-							<label htmlFor="picture_url">Picture URL</label>
+							<label htmlFor="color">Color</label>
+						</div>
+						<div className="form-floating mb-3">
+							<input
+								onChange={handleFormChange}
+								value={formData.year}
+								placeholder="Year"
+								required
+								type="text"
+								name="year"
+								id="year"
+								className="form-control"
+							/>
+							<label htmlFor="year">Year</label>
 						</div>
 						<div className="mb-3">
 							<select
 								onChange={handleFormChange}
-								value={formData.manufacturer_id}
+								value={formData.model_id}
 								required
-								name="manufacturer_id"
-								id="manufacturer"
+								name="model_id"
+								id="model_id"
 								className="form-select"
 							>
-								<option value="">Choose a manufacturer</option>
-								{manufacturers.map((manufacturer) => {
+								<option value="">Choose a Model</option>
+								{models.map((model) => {
 									return (
-										<option key={manufacturer.id} value={manufacturer.id}>
-											{manufacturer.name}
+										<option key={model.id} value={model.id}>
+											{model.name}
 										</option>
 									);
 								})}
@@ -115,4 +128,4 @@ function VehicleModelForm() {
 	);
 }
 
-export default VehicleModelForm;
+export default AutomobileForm;

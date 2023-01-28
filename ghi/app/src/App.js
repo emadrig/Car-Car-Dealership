@@ -12,6 +12,8 @@ import SalesList from "./SalesList";
 import ManufacturerForm from "./ManufacturersForm";
 import ManufacturerList from "./ManufacturerList";
 import ServiceHistoryList from "./ServiceHistoryList";
+import AutomobileList from "./AutomobileList";
+import AutomobileForm from "./AutomobileForm";
 
 function App() {
 	return (
@@ -26,6 +28,10 @@ function App() {
 					<Route path="vehicles">
 						<Route index element={<VehicleModelsList />} />
 						<Route path="new" element={<VehicleModelForm />} />
+					</Route>
+					<Route path="automobiles">
+						<Route index element={<AutomobileList />} />
+						<Route path="new" element={<AutomobileForm />} />
 					</Route>
 					<Route path="services">
 						<Route index element={<ServiceList />} />
