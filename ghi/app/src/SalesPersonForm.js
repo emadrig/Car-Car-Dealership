@@ -49,15 +49,15 @@ export default function SalesPersonForm(){
             <h1>Create a new Sales Person</h1>
             <form onSubmit={handleSubmit} id="create-location-form">
               <div className="form-floating mb-3">
-                <input onChange={handleFormChange} value={formData.name} placeholder="Name" required type="text" name="name" id="name" className="form-control"  />
+                <input maxlength="50" onChange={handleFormChange} value={formData.name} placeholder="Name" required type="text" name="name" id="name" className="form-control"  />
                 <label htmlFor="name">Name</label>
               </div>
               <div className="form-floating mb-3">
-                <input onChange={handleFormChange} value={formData.email} placeholder="Email" required type="text" name="email" id="email" className="form-control"/>
+                <input maxlength="40" onChange={handleFormChange} value={formData.email} placeholder="Email" required type="text" name="email" id="email" className="form-control"/>
                 <label htmlFor="email">Email</label>
               </div>
               <div className="form-floating mb-3">
-                <input onChange={handleFormChange} value={formData.employee_id} placeholder="employee_id" required type="text" name="employee_id" id="employee_id" className="form-control"/>
+                <input maxlength="6" onChange={handleFormChange} value={formData.employee_id} placeholder="employee_id" required type="text" name="employee_id" id="employee_id" className="form-control"/>
                 <label htmlFor="employee_id">Employee ID #</label>
               </div>
               <button className="btn btn-primary">Create</button>

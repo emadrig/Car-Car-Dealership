@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import {Dropdown, DropdownButton} from 'react-bootstrap';
 
 function Nav() {
 	return (
@@ -134,6 +135,24 @@ function Nav() {
 								Sales List
 							</NavLink>
 						</li>
+						<li className="nav-item">
+							<NavLink
+								className="nav-link"
+								aria-current="page"
+								to="/sales/history"
+							>
+								Sales History
+							</NavLink>
+						</li>
+						<li className="nav-item">
+							<NavLink
+								className="nav-link"
+								aria-current="page"
+								to="/sales/new"
+							>
+								New Sale
+							</NavLink>
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -142,34 +161,3 @@ function Nav() {
 }
 
 export default Nav;
-
-{
-	/* <Dropdown>
-	<DropdownToggle caret color="primary">
-		Services
-	</DropdownToggle>
-	<DropdownMenu>
-		<NavLink
-			className="nav-link dropdown-item"
-			aria-current="page"
-			to="/services/new"
-		>
-			<DropdownItem>New Service Appointment</DropdownItem>
-		</NavLink>
-		<NavLink
-			className="nav-link dropdown-item"
-			aria-current="page"
-			to="/services/"
-		>
-			<DropdownItem>Service Appointments</DropdownItem>
-		</NavLink>
-		<NavLink
-			className="nav-link dropdown-item"
-			aria-current="page"
-			to="/services/history/"
-		>
-			<DropdownItem>Service History</DropdownItem>
-		</NavLink>
-	</DropdownMenu>
-</Dropdown>; */
-}

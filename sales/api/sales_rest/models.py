@@ -49,13 +49,13 @@ class Sale(models.Model):
     def get_api_url(self):
         return reverse("api_list_sales", kwargs={"pk": self.pk})
 
-    def save(self):
+    def save(self, *args, **kwargs):
         if not self.sale_number:
             while True:
                 random_number = random.randint(100000, 999999)
                 self.sale_number = '420' + str(random_number)
                 try:
-                    super(Sale, self).save()
+                    super(Sale, self,).save()
                 except IntegrityError:
                     continue
                 break

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 function TechnicianForm() {
-	// const [states, setStates] = useState([]);
-	// const initialStates = props.states;
 	const [formData, setFormData] = useState({
 		name: "",
 		employee_number: "",

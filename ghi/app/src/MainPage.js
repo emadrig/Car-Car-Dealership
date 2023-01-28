@@ -1,88 +1,77 @@
 import {useEffect, useState, useRef} from 'react';
+import Slider from "react-slick";
+import "./App.css";
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 
 function MainPage() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [translateValue, setTranslateValue] = useState(0);
-  const [automobiles, setAutomobiles] = useState([]);
+  const [models, setModels] = useState([]);
 
-  const getData = async () => {
-    const response = await fetch('http://localhost:8100/api/automobiles/');
-    if (response.ok) {
-      const data = await response.json()
-      console.log(data.autos)
-      setAutomobiles(data.autos)
+  const getModels = async () => {
+    const response_models = await fetch('http://localhost:8100/api/models/')
+
+    if (response_models.ok) {
+      const data_models = await response_models.json();
+      setModels(data_models.models)
     }
   }
 
-  const slideWidth = () => {
-    if(slideRef && slideRef.current){
-      return slideRef.current.clientWidth;
-    }
-    return 0;
+
+  const NextArrow = ({onClick}) => {
+    return (
+      <div className="arrow next" onClick={onClick}>
+        <FaArrowRight />
+      </div>
+    )
   }
 
-  const handleNextSlide = () => {
-    if (currentIndex === automobiles.length - 1) {
-      setCurrentIndex(0);
-      setTranslateValue(0);
-    } else {
-      setCurrentIndex(currentIndex + 1);
-      setTranslateValue(translateValue - (slideWidth()))
-    }
-  };
+  const PrevArrow = ({onClick}) => {
+    return (
+      <div className="arrow prev" onClick={onClick}>
+        <FaArrowLeft />
+      </div>
+    )
+  }
 
-  const handlePrevSlide = () => {
-    if (currentIndex === 0) {
-      setCurrentIndex(automobiles.length - 1);
-      setTranslateValue(-(slideWidth() * (automobiles.length - 1)));
-    } else {
-      setCurrentIndex(currentIndex - 1);
-      setTranslateValue(translateValue + (slideWidth()));
-    }
-  };
+  const [imageIndex, setImageIndex] = useState(0)
+  const [activeSlide, setActiveSlide] = useState(0);
 
-  const slideRef = useRef(null);
+  const settings = {
+    infinite: true,
+    lazyLoad: true,
+    speed: 300,
+    slidesToShoe: 4,
+    centerMode: true,
+    centerPadding: 0,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+    beforeChange: (current, next) => setImageIndex(next),
+  }
 
   useEffect(() => {
-    if(slideRef.current){
-      slideWidth.current = slideRef.current.clientWidth;
-    }
-  }, [automobiles]);
-  
-  useEffect(() => {
-    getData()
-  }, []);
+    getModels();
+}, []);
 
   return (
-    <div className="px-4 py-5 my-5 text-center">
-      <h1 className="display-5 fw-bold">CarCars</h1>
+    <div className="MainPage">
+      <div className="px-4 py-5 my-5 text-center">
+        <h1 className="display-5 fw-bold">CarCar</h1>
       <div className="col-lg-6 mx-auto">
-        <p className="lead mb-4">
-          The premiere solution for automobile dealership
-          management!
-        </p>
-        <div className="carousel-container">
-          <div
-            className="carousel-slider"
-            style={{
-              transform: `translateX(${translateValue}px)`,
-              transition: "transform ease-out 0.45s"
-            }}
-          >
-
-          </div>
-          <div className="carousel-arrows">
-            <div className="carousel-arrow prev" onClick={handlePrevSlide}>
-              <i className="fas fa-arrow-left" />
-            </div>
-            <div className="carousel-arrow next" onClick={handleNextSlide}>
-              <i className="fas fa-arrow-right" />
-            </div>
-          </div>
-        </div>
+      <p className="lead mb-4">
+      The premiere solution for automobile dealership
+      management!
+      </p>
       </div>
     </div>
+
+      <Slider {...settings}>
+        {models.map((model,idx) => (
+          <div key={model.href} className={idx === imageIndex ? "slide activeSlide" : "slide"}>
+            <img src={model.picture_url} alt="ADD MODELS FOR IMAGES" />
+          </div>
+        ))}
+      </Slider>
+    </div>
   );
-}
+  }
 
 export default MainPage

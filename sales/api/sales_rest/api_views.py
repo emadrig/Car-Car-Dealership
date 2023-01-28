@@ -18,7 +18,7 @@ class SalesPersonEncoder(ModelEncoder):
 
 class CustomerEncoder(ModelEncoder):
     model = Customer
-    properties = ["name", "email", "phone_number", "address"]
+    properties = ["id", "name", "email", "phone_number", "address"]
 
 class SaleEncoder(ModelEncoder):
     model = Sale
@@ -162,7 +162,6 @@ def api_list_sales(request, employee_id=None):
         )
     else:
         content = json.loads(request.body)
-        print(content)
         try:
             salesperson_employee_id = content["salesperson"]
             salesperson = SalesPerson.objects.get(employee_id=salesperson_employee_id)
