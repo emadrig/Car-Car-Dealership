@@ -3,7 +3,7 @@
 Team:
 
 - Edwin Madrigal - Service Microservice
-- Person 2 - Which microservice?
+- Jeanpeter Polanco - Sales Microservice
 
 ## Design
 
