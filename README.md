@@ -13,5 +13,4 @@ By creating models in the service microservice that include Technician, Service 
 
 ## Sales microservice
 
-Explain your models and integration with the inventory
-microservice, here.
+The sales microservice application includes several models, such as Customer, Sales Order, and AutomobileVO, that allow us to manage the sales process efficiently. We use CRUD operations to create, read, update, and delete customer and sales order information. The sales microservice also integrates with the inventory microservice, allowing us to retrieve the latest automobile data in real-time. We use a poller to access the inventory API and retrieve the latest automobile data, which is then used to create an automobile value object in the sales microservice. This allows us to assign sales orders to customers without directly manipulating the inventory data.The sales microservice implements RESTful API formatting, with URLs that support CRUD operations for data management. To provide a smooth user experience, we use React to send requests to the URLs and dynamically display the results in the web browser. This allows the user to easily navigate and perform sales-related tasks with ease.
